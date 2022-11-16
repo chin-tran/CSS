@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./assets/css/base.css" />
+        <link rel="stylesheet" href="./assets/css/slider.css">
+        <title>Slide</title>
+    </head>
+
+    <body>
+        <div class="main__slide">
+            <input type="radio" checked hidden name="radio-btn" id="slide_radio1">
+            <input type="radio" hidden name="radio-btn" id="slide_radio2">
+            <input type="radio" hidden name="radio-btn" id="slide_radio3">
+            <input type="radio" hidden name="radio-btn" id="slide_radio4">
+            <div class="slides">
+                <div class="slide">
+                    <img src="./assets/imgs/image_4.jpg" alt="">
+                </div>
+                <div class="slide first">
+                    <img src="./assets/imgs/image_1.jpg" alt="">
+                </div>
+                <div class="slide">
+                    <img src="./assets/imgs/image_2.jpg" alt="">
+                </div>
+                <div class="slide">
+                    <img src="./assets/imgs/image_3.jpg" alt="">
+                </div>
+                <div class="slide">
+                    <img src="./assets/imgs/image_4.jpg" alt="">
+                </div>
+                <div class="slide first">
+                    <img src="./assets/imgs/image_1.jpg" alt="">
+                </div>
+            </div>
+            <div class="slide__navigation">
+                <label for="slide_radio1" class="manual-btn auto-btn1"></label>
+                <label for="slide_radio2" class="manual-btn auto-btn2"></label>
+                <label for="slide_radio3" class="manual-btn auto-btn3"></label>
+                <label for="slide_radio4" class="manual-btn auto-btn4"></label>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        var counter = 1;
+        var slideWidth = 400;
+        var slide = document.querySelectorAll('.slides')[0];
+        slide.style.transform = `translateX(${-slideWidth * counter}px)`;
+        document.getElementById('slide_radio' + counter).checked = true;
+        var slides = document.querySelectorAll('.slide');
+        slide.addEventListener('transitionend', () => {
+            if (counter === 5) {
+                slide.style.transition = 'none';
+                counter = 1;
+                slide.style.transform = `translateX(${-slideWidth * counter}px)`;
+            }
+
+            if (counter === 0) {
+                slide.style.transition = 'none';
+                counter = slides.length - 2;
+                slide.style.transform = `translateX(${-slideWidth * counter}px)`;
+            }
+        });
+
+        const moveToNextSlide = () => {
+            if (counter >= slides.length - 1) return;
+            counter++;
+            var checkedIndex = counter;
+            if (checkedIndex > slides.length - 2) {
+                checkedIndex = 1;
+            }
+            document.getElementById('slide_radio' + checkedIndex).checked = true;
+            slide.style.transition = '.7s ease-out';
+            slide.style.transform = `translateX(${-slideWidth * counter}px)`;
+        };
+
+        setInterval(function () {
+            moveToNextSlide()
+        }, 3000);
+    </script>
+
+</html>
